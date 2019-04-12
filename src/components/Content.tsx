@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ReactMarkdown from 'react-markdown';
 import * as post1 from './post1.md'
 
-const posts = [post1];
+const posts = [String(post1)];
 
 function Content() {
 	return (
@@ -19,7 +19,7 @@ function Content() {
 			<Divider />
 			{
 				posts.map(post => (
-					<ReactMarkdown source={String(post)}/>
+					<ReactMarkdown source={post} />
 				))
 			}
 		</Grid>

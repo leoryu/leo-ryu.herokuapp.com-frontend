@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import Bar from './Bar'
-import FeaturedPosts from './FeaturedPosts'
-import Content from './Content'
-import Footer from './Footer'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Bar from './components/Bar'
+import FeaturedPosts from './components/FeaturedPosts'
+import Content from './components/Content'
+import Footer from './components/Footer'
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -32,19 +33,17 @@ function Blog(props: Props) {
 	const { classes } = props;
 
 	return (
-		<React.Fragment>
+		<Router>
 			<CssBaseline />
 			<div className={classes.layout}>
 				<Bar />
 				<main>
-					<FeaturedPosts />
-					<Grid container spacing={40} className={classes.mainGrid}>
-						<Content />
-					</Grid>
+					<Route exact path="/" component={FeaturedPosts} />
+					<Route exact path="/paper" component={Content} />
 				</main>
 			</div>
 			<Footer />
-		</React.Fragment>
+		</Router>
 	);
 }
 
