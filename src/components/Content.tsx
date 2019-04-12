@@ -5,6 +5,10 @@ import Grid from '@material-ui/core/Grid';
 //import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 //import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import ReactMarkdown from 'react-markdown';
+import * as post1 from './post1.md'
+
+const posts = [post1];
 
 function Content() {
 	return (
@@ -13,11 +17,11 @@ function Content() {
 				From the Firehose
               </Typography>
 			<Divider />
-			{/* {posts.map(post => (
-								<Markdown className={classes.markdown} key={post.substring(0, 40)}>
-									{post}
-								</Markdown>
-							))} */}
+			{
+				posts.map(post => (
+					<ReactMarkdown source={String(post)}/>
+				))
+			}
 		</Grid>
 	);
 }
