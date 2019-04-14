@@ -9,18 +9,18 @@ import Blog from '../src/Blog'
 import Content from '../src/components/Content'
 
 storiesOf('Blog', module)
-.add('Blog', () => <Blog/>);
+	.add('Blog', () => <Blog />);
 
 storiesOf('Content', module).add('Content', () => <Content />);
 
 storiesOf('Welcom', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>
-      <span role="img" aria-label="so cool">
-        😀 😎 👍 💯
+	.add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+	.add('with some emoji', () => (
+		<Button onClick={action('clicked')}>
+			<span role="img" aria-label="so cool">
+				😀 😎 👍 💯
       </span>
-    </Button>
-  ));
+		</Button>
+	));
