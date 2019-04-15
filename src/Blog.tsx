@@ -39,7 +39,7 @@ function Blog(props: Props) {
 				<Bar />
 				<main>
 					<Route exact path="/" component={FeaturedPosts} />
-					<Route exact path="/paper" component={Content} />
+					<Route path="/paper/:id" component={Content} />
 				</main>
 			</div>
 			<Footer />
