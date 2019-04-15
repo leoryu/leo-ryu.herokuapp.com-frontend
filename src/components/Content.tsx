@@ -6,7 +6,7 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import Divider from '@material-ui/core/Divider';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
-import { RouteComponentProps } from 'react-router-dom';
+import { match } from 'react-router-dom';
 
 const styles = (theme: Theme) =>
 	createStyles({});
@@ -18,7 +18,9 @@ interface ResData {
 	content: string;
 }
 
-interface Props extends WithStyles<typeof styles>, RouteComponentProps<MatchParameters> { }
+interface Props extends WithStyles<typeof styles> {
+	match: match<MatchParameters>;
+}
 interface State {
 	resData: ResData;
 }
@@ -36,7 +38,6 @@ class Content extends React.Component<Props, State> {
 		//let res = await axios.get<ResData>('http://192.168.1.100:7777/api/papers/5cb2a59bb39a75d5dbe2c732')
 		let res = await axios.get<ResData>('http://192.168.1.100:7777/api/papers/' + this.props.match.params.id)
 		this.setState({ resData: res.data })
-		console.log("1")
 	}
 	render() {
 		return (
