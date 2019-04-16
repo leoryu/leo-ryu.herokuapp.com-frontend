@@ -6,7 +6,7 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Bar from './components/Bar'
 import FeaturedPosts from './components/FeaturedPosts'
-import Content from './components/Content'
+import Paper from './components/Paper'
 import Footer from './components/Footer'
 
 const styles = (theme: Theme) =>
@@ -39,7 +39,7 @@ function Blog(props: Props) {
 				<Bar />
 				<main>
 					<Route exact path="/" component={FeaturedPosts} />
-					<Route path="/paper/:id" component={Content} />
+					<Route path="/paper/:id" component={Paper} />
 				</main>
 			</div>
 			<Footer />

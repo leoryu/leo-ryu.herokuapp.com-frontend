@@ -11,7 +11,18 @@ import Content from '../src/components/Content'
 storiesOf('Blog', module)
 	.add('Blog', () => <Blog />);
 
-storiesOf('Content', module).add('Content', () => <Content />);
+	storiesOf('Content', module)
+	.add('Content', () => <Content 
+		contentData={
+			{
+				title: "Hello",
+				abstract: "",
+				content: "# World!",
+				created_at: 0,
+				edited_at:  0,
+			}
+		}
+	/>);
 
 storiesOf('Welcom', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -24,3 +35,4 @@ storiesOf('Button', module)
       </span>
 		</Button>
 	));
+
