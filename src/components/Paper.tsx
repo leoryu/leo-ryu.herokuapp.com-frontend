@@ -26,7 +26,8 @@ interface State {
 class Paper extends React.Component<Props, State> {
 	state: State = {
 		resData: {
-			title: "Loding...",
+			id: "",
+			title: "",
 			content: "",
 			abstract: "",
 			created_at: 0,

@@ -9,6 +9,7 @@ interface Props {
 }
 
 export interface ContentData {
+	id:string,
 	title: string;
 	abstract: string;
 	content: string;
