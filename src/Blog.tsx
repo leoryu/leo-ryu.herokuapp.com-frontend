@@ -10,6 +10,7 @@ import FeaturedPosts from './components/FeaturedPosts';
 import Paper from './components/Paper';
 import Footer from './components/Footer';
 import { ContentData } from './components/Content';
+import SignIn  from './components/SignIn';
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -68,6 +69,7 @@ class Blog extends React.Component<Props, State> {
 							render={(props) => <FeaturedPosts {...props} posts={this.state.papers} />}
 							/>
 						<Route path="/paper/:id" component={Paper} />
+						<Route path="/signin" component={SignIn} />
 					</main>
 				</div>
 				<Footer />

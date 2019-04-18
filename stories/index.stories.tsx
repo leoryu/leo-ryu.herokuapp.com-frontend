@@ -5,10 +5,11 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
-import Blog from '../src/Blog'
-import {MemoryRouter} from 'react-router-dom'
-import Content from '../src/components/Content'
-import FeaturedPosts from '../src/components/FeaturedPosts'
+import Blog from '../src/Blog';
+import { MemoryRouter } from 'react-router-dom';
+import Content from '../src/components/Content';
+import FeaturedPosts from '../src/components/FeaturedPosts';
+import SignIn from '../src/components/SignIn';
 
 const posts = [
 	{
@@ -36,11 +37,13 @@ storiesOf('Content', module)
 	.add('Content', () => <Content
 		contentData={posts[1]}
 	/>);
+storiesOf('SignIn', module)
+	.add('SignIn', () => <SignIn />);
 
 storiesOf('FeaturedPosts', module)
-.addDecorator(story => (
-	<MemoryRouter initialEntries={['/paper/:id']}>{story()}</MemoryRouter>
-  ))
+	.addDecorator(story => (
+		<MemoryRouter initialEntries={['/paper/:id']}>{story()}</MemoryRouter>
+	))
 	.add("Posts", () => <FeaturedPosts posts={posts} />)
 
 storiesOf('Welcom', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);

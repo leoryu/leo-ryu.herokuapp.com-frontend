@@ -4,13 +4,14 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import Link from '@material-ui/core/Link';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 import { Link as RouterLink } from 'react-router-dom';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { ContentData } from './Content';
+import { Unixtime2Date } from './TimeConvert';
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -76,21 +77,21 @@ function FeaturedPosts(props: Props) {
 										{post.title}
 									</Typography>
 									<Typography variant="subtitle1" color="textSecondary">
-										{post.created_at}
+										{Unixtime2Date(post.created_at)}
 									</Typography>
 									<Typography variant="subtitle1" paragraph>
-										{post.abstract}
+										Abstract: {post.abstract}
 									</Typography>
-									<Link component={props => <RouterLink {...props} to={"/paper/" + post.id} />}>
-										<Typography variant="subtitle1" color="primary">
-											Continue reading...
-										</Typography>
-									</Link>
+									<Button
+										variant="contained"
+										component={props => <RouterLink {...props} to={"/paper/" + post.id} />}
+									>
+										Read
+									</Button>
 								</CardContent>
 							</div>
 							<Hidden xsDown>
 								<CardMedia
-									className={classes.cardMedia}
 									image=""
 									title="Image title"
 								/>
@@ -98,8 +99,7 @@ function FeaturedPosts(props: Props) {
 						</Card>
 					</Grid>
 				))}
-			</Grid>
-			{/* End sub featured posts */}
+			</Grid> {/* End sub featured posts */}
 		</React.Fragment>
 	);
 }
