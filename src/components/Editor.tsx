@@ -2,31 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import axios, {AxiosError} from 'axios';
+import axios, { AxiosError } from 'axios';
+import { match } from 'react-router-dom';
+import { PaperStruct } from './Public';
 
 const styles = (theme: Theme) =>
 	createStyles({
-		main: {
-			width: 'auto',
-			display: 'block', // Fix IE 11 issue.
-			marginLeft: theme.spacing.unit * 3,
-			marginRight: theme.spacing.unit * 3,
-			[theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-				width: 400,
-				marginLeft: 'auto',
-				marginRight: 'auto',
-			},
-		},
 		paper: {
 			marginTop: theme.spacing.unit * 8,
 			display: 'flex',
@@ -48,25 +40,28 @@ const styles = (theme: Theme) =>
 	});
 
 interface Props extends WithStyles<typeof styles> {
+	isModification: boolean;
+	match: match<{ id: string }>;
 }
-interface State {
-	username: string;
-	password: string;
+interface State extends PaperStruct {
 }
 
-class SignIn extends React.Component<Props> {
+class Editor extends React.Component<Props> {
 	state: State = {
-		username: '',
-		password: '',
+		id: "",
+		title: "",
+		abstract: "",
+		content: "",
+		created_at: 0,
+		edited_at: 0,
 	}
 
 	onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		axios.post<{ token: string }>(process.env.REACT_APP_API_URL + '/api/verify', this.state)
-			.then(res => {
-				localStorage.setItem('leo-blog-token', res.data.token)
-				console.log('success')
-			})
+		axios.post(process.env.REACT_APP_API_URL + '/api/papers', this.state, {
+			headers: { Authorization: localStorage.getItem("leo-blog-token") }
+
+		})
 			.catch((err: AxiosError) => {
 				localStorage.removeItem('leo-blog-token')
 				console.log(err.response)
@@ -77,66 +72,82 @@ class SignIn extends React.Component<Props> {
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
+	componentDidMount() {
+		if (this.props.isModification) {
+			this.getPaper()
+			console.log(this.state.title)
+		} else {
+			console.log("ha?")
+		}
+	}
+
+	getPaper = async () => {
+		//let res = await axios.get<ResData>('http://192.168.1.100:7777/api/papers/5cb2a59bb39a75d5dbe2c732')
+		let res = await axios.get<State>(process.env.REACT_APP_API_URL + '/api/papers/' + this.props.match.params.id)
+		this.setState(res.data)
+		console.log(this.state.title)
+	}
 
 	render() {
 		const { classes } = this.props;
-		const { username, password } = this.state;
+		const { title, abstract, content } = this.state;
 		return (
-			<main className={classes.main}>
-				<CssBaseline />
+			<Grid>
 				<Paper className={classes.paper}>
-					<Avatar className={classes.avatar}>
-						<LockOutlinedIcon />
-					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign in
+						Paper editor
 					</Typography>
 					<form className={classes.form} onSubmit={this.onSubmit}>
 						<FormControl margin="normal" required fullWidth>
-							<InputLabel htmlFor="email">Email Address</InputLabel>
-							<Input
-								id="username"
-								name="username"
-								autoComplete="email"
-								value={username}
+							<TextField
+								label="Title"
+								id="title"
+								name="title"
+								value={title}
 								onChange={this.onChange}
 								autoFocus
 							/>
 						</FormControl>
-						<FormControl margin="normal" required fullWidth>
-							<InputLabel htmlFor="password">Password</InputLabel>
-							<Input
-								name="password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								value={password}
+						<FormControl margin="normal" fullWidth>
+							<TextField
+								label="Abstract"
+								name="abstract"
+								id="abstract"
+								rows="4"
+								value={abstract}
 								onChange={this.onChange}
+								multiline
 							/>
 						</FormControl>
-						<FormControlLabel
-							control={<Checkbox value="remember" color="primary" />}
-							label="Remember me"
-						/>
+						<FormControl margin="normal" required fullWidth>
+							<TextField
+								label="Content"
+								name="content"
+								id="content"
+								value={content}
+								rows="10"
+								onChange={this.onChange}
+								multiline
+							/>
+						</FormControl>
 						<Button
 							type="submit"
-							fullWidth
 							variant="contained"
 							color="primary"
 							className={classes.submit}
 						>
-							Sign in
-          </Button>
+							Submit
+						</Button>
 					</form>
 				</Paper>
-			</main>
+			</Grid>
 		);
 	}
 }
 
-(SignIn as React.ComponentClass<Props>).propTypes = {
+(Editor as React.ComponentClass<Props>).propTypes = {
 	classes: PropTypes.object.isRequired,
 } as any;
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Editor);
 

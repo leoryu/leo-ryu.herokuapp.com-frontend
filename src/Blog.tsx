@@ -11,6 +11,7 @@ import Paper from './components/Paper';
 import Footer from './components/Footer';
 import { ContentData } from './components/Content';
 import SignIn  from './components/SignIn';
+import Editor from './components/Editor';
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -70,6 +71,10 @@ class Blog extends React.Component<Props, State> {
 							/>
 						<Route path="/paper/:id" component={Paper} />
 						<Route path="/signin" component={SignIn} />
+						<Route path="/admin/create" component={Editor} />
+						<Route path="/admin/edit/:id"
+							render={(props) => <Editor {...props} isModification={true} />}
+							/>
 					</main>
 				</div>
 				<Footer />
