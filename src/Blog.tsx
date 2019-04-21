@@ -58,7 +58,7 @@ class Blog extends React.Component<Props, State> {
                     <main>
                         <Route exact path="/" component={Papers} />
                         <Route path="/paper/:id" component={Paper} />
-                        <Route path="/signin" component={SignIn} />
+                        <Route path="/admin/signin" component={SignIn} />
                         <Route path="/admin/create" component={Editor} />
                         <Route path="/admin/edit/:id"
                             render={(props) => <Editor {...props} isModification={true} />}
