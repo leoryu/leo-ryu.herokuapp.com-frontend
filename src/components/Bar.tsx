@@ -16,21 +16,13 @@ const styles = (theme: Theme) =>
             flex: 1,
         },
         toolbarSecondary: {
-            justifyContent: 'space-between',
+            justifyContent: 'space-evenly',
         },
     });
 
 const sections = [
-    'Technology',
-    'Design',
-    'Culture',
-    'Business',
-    'Politics',
-    'Opinion',
-    'Science',
-    'Health',
-    'Style',
-    'Travel',
+    'Blog',
+    'Profile',
 ];
 
 export interface Props extends WithStyles<typeof styles> { }
@@ -41,7 +33,6 @@ function Bar(props: Props) {
     return (
         <React.Fragment>
             <Toolbar className={classes.toolbarMain}>
-                <Button size="small">Subscribe</Button>
                 <Typography
                     component="h2"
                     variant="h5"
@@ -50,21 +41,15 @@ function Bar(props: Props) {
                     noWrap
                     className={classes.toolbarTitle}
                 >
-                    Blog
+                    Leo's Blog
           </Typography>
-                <IconButton>
-                    <SearchIcon />
-                </IconButton>
-                <Button variant="outlined" size="small">
-                    Sign up
-          </Button>
             </Toolbar>
             <Toolbar variant="dense" className={classes.toolbarSecondary}>
-                {sections.map(section => (
+                {/* {sections.map(section => (
                     <Typography color="inherit" noWrap key={section}>
                         {section}
                     </Typography>
-                ))}
+                ))} */}
             </Toolbar>
         </React.Fragment>
     );

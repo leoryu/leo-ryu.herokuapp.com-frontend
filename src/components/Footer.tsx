@@ -5,34 +5,34 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 //import Button from '@material-ui/core/Button';
 
 const styles = (theme: Theme) =>
-	createStyles({
-		footer: {
-			backgroundColor: theme.palette.background.paper,
-			marginTop: theme.spacing.unit * 8,
-			padding: `${theme.spacing.unit * 6}px 0`,
-		},
-	});
+    createStyles({
+        footer: {
+            backgroundColor: theme.palette.background.paper,
+            marginTop: theme.spacing.unit * 8,
+            padding: `${theme.spacing.unit * 6}px 0`,
+        },
+    });
 
 
 export interface Props extends WithStyles<typeof styles> { }
 
 function Footer(props: Props) {
-	const { classes } = props;
+    const { classes } = props;
 
-	return (
-			<footer className={classes.footer}>
-				<Typography variant="h6" align="center" gutterBottom>
-					Footer
+    return (
+        <footer className={classes.footer}>
+            <Typography variant="h6" align="center" gutterBottom>
+                Contact me
         </Typography>
-				<Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-					Something here to give the footer a purpose!
+            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                Email: leo-ryu@outlook.com
         </Typography>
-			</footer>
-	);
+        </footer>
+    );
 }
 
 Footer.propTypes = {
-	classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 } as any;
 
 export default withStyles(styles)(Footer);
