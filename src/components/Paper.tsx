@@ -5,52 +5,63 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import ReactMarkdown from 'react-markdown';
-import axios from 'axios';
+import Axios, { AxiosError } from 'axios';
 import { match } from 'react-router-dom';
-import Content, { ContentData } from './Content'
+import { PaperStruct, GetApi } from './Public';
 
 const styles = () =>
-	createStyles({});
+    createStyles({});
 
 interface MatchParameters {
-	id: string;
+    id: string;
 }
 
 interface Props extends WithStyles<typeof styles> {
-	match: match<MatchParameters>;
+    match: match<MatchParameters>;
 }
 interface State {
-	resData: ContentData;
+    paper: PaperStruct;
 }
 
 class Paper extends React.Component<Props, State> {
-	state: State = {
-		resData: {
-			id: "",
-			title: "",
-			content: "",
-			abstract: "",
-			created_at: 0,
-			edited_at: 0,
-		},
-	};
-	componentDidMount() {
-		this.getPaper();
-	}
-	getPaper = async () => {
-		//let res = await axios.get<ResData>('http://192.168.1.100:7777/api/papers/5cb2a59bb39a75d5dbe2c732')
-		let res = await axios.get<ContentData>(process.env.REACT_APP_API_URL + '/api/papers/' + this.props.match.params.id)
-		this.setState({ resData: res.data })
-	}
-	render() {
-		return (
-			<Content contentData={this.state.resData} />
-		)
-	}
+    state: State = {
+        paper: {
+            id: "",
+            title: "",
+            content: "",
+            abstract: "",
+            created_at: 0,
+            edited_at: 0,
+        },
+    };
+    componentDidMount() {
+        this.getPaper();
+    }
+    getPaper = async () => {
+        Axios.get<PaperStruct>(GetApi() + '/api/papers/' + this.props.match.params.id)
+            .then(res => {
+                this.setState({ paper: res.data });
+            })
+            .catch((err: AxiosError) => {
+                console.log(err.response);
+            });
+    }
+    render() {
+        const { paper } = this.state;
+        return (
+            <Grid item xs={12} md={12}>
+                <Typography variant="h3" gutterBottom>
+                    {paper.title}
+                </Typography>
+                <Divider />
+                <ReactMarkdown source={paper.content} />
+            </Grid>
+        )
+    }
 }
 
 (Paper as React.ComponentClass<Props>).propTypes = {
-	classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 } as any;
 
 export default withStyles(styles)(Paper);
