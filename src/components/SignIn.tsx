@@ -66,7 +66,7 @@ class SignIn extends React.Component<Props> {
         axios.post<{ token: string }>(process.env.REACT_APP_API_URL + '/api/verify', this.state)
             .then(res => {
                 localStorage.setItem(TokenKey, res.data.token)
-                console.log('success')
+				window.location.href = '/'
             })
             .catch((err: AxiosError) => {
                 localStorage.removeItem('leo-blog-token')
