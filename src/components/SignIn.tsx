@@ -13,7 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import axios, { AxiosError } from 'axios';
-import { TokenKey } from './Public';
+import { TokenKey, GetApi } from './Public';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -63,10 +63,10 @@ class SignIn extends React.Component<Props> {
 
     onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        axios.post<{ token: string }>(process.env.REACT_APP_API_URL + '/api/verify', this.state)
+        axios.post<{ token: string }>(GetApi() + '/api/verify', this.state)
             .then(res => {
                 localStorage.setItem(TokenKey, res.data.token)
-				window.location.href = '/'
+                window.location.href = '/'
             })
             .catch((err: AxiosError) => {
                 localStorage.removeItem('leo-blog-token')
