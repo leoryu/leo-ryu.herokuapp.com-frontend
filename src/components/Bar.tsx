@@ -4,8 +4,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { GitHubIcon } from './Public';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -33,16 +36,22 @@ function Bar(props: Props) {
     return (
         <React.Fragment>
             <Toolbar className={classes.toolbarMain}>
-                <Typography
-                    component="h2"
+                <Link
+                    className={classes.toolbarTitle}
+                    component={props => <RouterLink {...props} to={"/"} />}
+                    underline="none"
+                    align="center"
                     variant="h5"
                     color="inherit"
-                    align="center"
                     noWrap
-                    className={classes.toolbarTitle}
                 >
                     Leo's Blog
-          </Typography>
+                </Link>
+                <IconButton
+                    href="https://github.com/leoryu"
+                >
+                    <GitHubIcon />
+                </IconButton>
             </Toolbar>
             <Toolbar variant="dense" className={classes.toolbarSecondary}>
                 {/* {sections.map(section => (
